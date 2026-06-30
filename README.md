@@ -1,4 +1,4 @@
-# Jogo Encontre o Diferente — Web I
+# odd-one-out
 
 **Seu nome completo:** Iarley Oliveira de Jesus
 ---
