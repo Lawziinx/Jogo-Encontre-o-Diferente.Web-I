@@ -1,7 +1,6 @@
 # Jogo Encontre o Diferente — Web I
 
-**Seu nome completo:** [Coloque seu nome aqui]
-
+**Seu nome completo:** Iarley Oliveira de Jesus
 ---
 
 ## Mecânica escolhida e tema
