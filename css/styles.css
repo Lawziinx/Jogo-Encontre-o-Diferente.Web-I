@@ -400,47 +400,13 @@ html, body {
   gap: 0;
 }
 
-/* ---------- DESKTOP LARGO ---------- */
-/* Em telas grandes, a tela inicial e final ficam lado a lado com a grade */
+/* ---------- DESKTOP ---------- */
 @media (min-width: 900px) {
-  /* Tela inicial: título à esquerda, formulário à direita */
-  #tela-inicio {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    padding: 2rem;
-  }
-
-  .intro-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem 4rem;
-    max-width: 800px;
-    text-align: left;
-    align-items: start;
-  }
-
-  /* Título e subtítulo ficam na coluna esquerda */
-  .eyebrow        { grid-column: 1; }
-  .titulo-jogo    { grid-column: 1; }
-  .subtitulo      { grid-column: 1; }
-
-  /* Formulário, botão e ranking ficam na coluna direita */
-  .campo-nome     { grid-column: 2; margin-top: 2rem; }
-  #btn-jogar      { grid-column: 2; }
-  .ranking-preview { grid-column: 2; }
-
-  /* Grade do jogo: limita largura para não ficar absurda em ultrawide */
+  /* Grade do jogo: limita largura para não ocupar a tela toda em ultrawide */
   .grade {
     max-width: min(70vh, 700px);
     margin: 0 auto;
     width: 100%;
-  }
-
-  /* Tela final: mais espaçada */
-  .fim-wrapper {
-    max-width: 520px;
   }
 }
 
