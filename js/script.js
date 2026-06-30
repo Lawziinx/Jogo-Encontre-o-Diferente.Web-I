@@ -214,15 +214,16 @@ function calcularTamanhoGrade() {
 function gerarGrade(colunas, linhas) {
   gradeEl.innerHTML = '';
 
-const larguraGrade = {
-  3: 420,
-  4: 500,
-  5: 580,
-  6: 660
-};
+  const larguraGrade = {
+    3: 420,
+    4: 500,
+    5: 580,
+    6: 660
+  };
 
-gradeEl.style.width = `${larguraGrade[colunas]}px`;
-gradeEl.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
+  gradeEl.style.width = `${larguraGrade[colunas]}px`;
+  gradeEl.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
+
   estado.emojisAtual.forEach((emoji, index) => {
     const celula = document.createElement('div');
     celula.classList.add('celula');
