@@ -15,14 +15,14 @@
 }
 
 :root {
-  --bg:        #0d0d0d;
-  --surface:   #161616;
-  --border:    #2a2a2a;
-  --acento:    #e8ff00;
-  --acento2:   #ff3c3c;
-  --texto:     #f0f0f0;
-  --muted:     #666;
-  --fonte-disp: 'Space Mono', monospace;
+  --bg:          #0d0d0d;
+  --surface:     #161616;
+  --border:      #2a2a2a;
+  --acento:      #e8ff00;
+  --acento2:     #ff3c3c;
+  --texto:       #f0f0f0;
+  --muted:       #666;
+  --fonte-disp:  'Space Mono', monospace;
   --fonte-corpo: 'Space Grotesk', sans-serif;
 }
 
@@ -30,20 +30,26 @@ html, body {
   background: var(--bg);
   color: var(--texto);
   font-family: var(--fonte-corpo);
-  height: 100%;
+  /* altura exata da viewport — sem overflow oculto para não esconder conteúdo */
+  height: 100dvh;
   overflow: hidden;
 }
 
 /* ---------- SISTEMA DE TELAS ---------- */
+/* Cada tela ocupa 100% da viewport e rola internamente se necessário */
 .tela {
   position: fixed;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  /* scroll interno caso o conteúdo não caiba */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .tela.ativa {
@@ -57,6 +63,8 @@ html, body {
   padding: 2rem 1.5rem;
   max-width: 440px;
   width: 100%;
+  /* em telas baixas, o wrapper rola em vez de ser cortado */
+  margin: auto;
 }
 
 .eyebrow {
@@ -69,14 +77,14 @@ html, body {
 
 .titulo-jogo {
   font-family: var(--fonte-disp);
-  font-size: clamp(4rem, 18vw, 7rem);
+  /* clamp garante que em desktop não fica gigante demais */
+  font-size: clamp(3rem, 10vw, 6rem);
   font-weight: 700;
   line-height: 0.88;
   letter-spacing: -0.03em;
   color: var(--texto);
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  /* assinatura: cada letra tem sombra colorida deslocada */
+  margin-bottom: 1.2rem;
   text-shadow: 4px 4px 0px var(--acento), 8px 8px 0px rgba(232,255,0,0.15);
 }
 
@@ -84,11 +92,11 @@ html, body {
   font-size: 0.9rem;
   color: var(--muted);
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .campo-nome {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .campo-nome input {
@@ -160,9 +168,9 @@ html, body {
 
 /* ---------- RANKING PREVIEW ---------- */
 .ranking-preview {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   border-top: 1px solid var(--border);
-  padding-top: 1.2rem;
+  padding-top: 1rem;
 }
 
 .ranking-titulo {
@@ -196,11 +204,14 @@ html, body {
   color: var(--muted);
 }
 
-/* ---------- HUD (cabeçalho do jogo) ---------- */
+/* ---------- TELA DO JOGO ---------- */
+/* Layout em coluna: HUD fixo no topo, grade ocupa o meio,
+   sem overflow — a grade se encolhe para caber */
 #tela-jogo {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+  overflow: hidden; /* a grade não pode vazar para fora */
   padding: 0;
 }
 
@@ -212,6 +223,8 @@ html, body {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   gap: 1rem;
+  /* HUD não encolhe nunca */
+  flex-shrink: 0;
 }
 
 .hud-bloco {
@@ -270,49 +283,45 @@ html, body {
   line-height: 1.8rem;
   color: transparent;
   transition: color 0.2s;
+  flex-shrink: 0;
 }
 
-.feedback-msg.acerto {
-  color: var(--acento);
-}
-
-.feedback-msg.erro {
-  color: var(--acento2);
-}
+.feedback-msg.acerto { color: var(--acento); }
+.feedback-msg.erro   { color: var(--acento2); }
 
 /* ---------- GRADE ---------- */
 .grade {
   display: grid;
   gap: 6px;
-  padding: 1rem;
+  padding: 0.8rem;
+  /* cresce para preencher o espaço disponível, mas não passa disso */
   flex: 1;
+  min-height: 0; /* crítico: sem isso o flex item ignora o limite do pai */
   align-content: center;
-  /* colunas definidas via JS */
+  /* garante que a grade nunca estoure horizontalmente */
+  overflow: hidden;
 }
 
-/* Célula base */
+/* Célula — o tamanho é controlado pelo grid, não por valores fixos */
 .celula {
   aspect-ratio: 1;
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(1.2rem, 4vw, 2rem);
+  /* fonte escala com o tamanho real da célula via container query fallback */
+  font-size: clamp(0.9rem, 3.5vmin, 2rem);
   cursor: pointer;
   border: 2px solid transparent;
   transition: transform 0.12s, border-color 0.12s, opacity 0.2s;
   user-select: none;
-  /* animação de embaralhamento */
+  /* impede que a célula cresça além do espaço do grid */
+  min-width: 0;
+  min-height: 0;
 }
 
-.celula:hover {
-  transform: scale(1.08);
-  border-color: rgba(232,255,0,0.4);
-}
-
-.celula:active {
-  transform: scale(0.94);
-}
+.celula:hover  { transform: scale(1.08); border-color: rgba(232,255,0,0.4); }
+.celula:active { transform: scale(0.94); }
 
 .celula.acerto-anim {
   border-color: var(--acento) !important;
@@ -325,16 +334,18 @@ html, body {
 }
 
 /* ---------- TELA FIM ---------- */
+/* Em desktop centraliza com max-width; em telas pequenas rola */
 .fim-wrapper {
   text-align: center;
   padding: 2rem 1.5rem;
-  max-width: 440px;
+  max-width: 480px;
   width: 100%;
+  margin: auto;
 }
 
 .fim-titulo {
   font-family: var(--fonte-disp);
-  font-size: clamp(2rem, 10vw, 3.5rem);
+  font-size: clamp(2rem, 8vw, 3.5rem);
   font-weight: 700;
   line-height: 1;
   margin-bottom: 0.5rem;
@@ -346,7 +357,7 @@ html, body {
   font-size: 0.8rem;
   letter-spacing: 0.2em;
   color: var(--acento);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-transform: uppercase;
 }
 
@@ -354,8 +365,8 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  padding: 1.2rem;
   border: 1px solid var(--border);
   border-top: 3px solid var(--acento);
 }
@@ -365,12 +376,12 @@ html, body {
   font-size: 0.55rem;
   letter-spacing: 0.3em;
   color: var(--muted);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .fim-pontos {
   font-family: var(--fonte-disp);
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 8vw, 4rem);
   font-weight: 700;
   color: var(--acento);
 }
@@ -379,7 +390,7 @@ html, body {
   font-family: var(--fonte-corpo);
   font-size: 0.85rem;
   color: var(--muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   line-height: 1.8;
 }
 
@@ -389,22 +400,93 @@ html, body {
   gap: 0;
 }
 
-/* ---------- RESPONSIVO ---------- */
+/* ---------- DESKTOP LARGO ---------- */
+/* Em telas grandes, a tela inicial e final ficam lado a lado com a grade */
+@media (min-width: 900px) {
+  /* Tela inicial: título à esquerda, formulário à direita */
+  #tela-inicio {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    padding: 2rem;
+  }
+
+  .intro-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 4rem;
+    max-width: 800px;
+    text-align: left;
+    align-items: start;
+  }
+
+  /* Título e subtítulo ficam na coluna esquerda */
+  .eyebrow        { grid-column: 1; }
+  .titulo-jogo    { grid-column: 1; }
+  .subtitulo      { grid-column: 1; }
+
+  /* Formulário, botão e ranking ficam na coluna direita */
+  .campo-nome     { grid-column: 2; margin-top: 2rem; }
+  #btn-jogar      { grid-column: 2; }
+  .ranking-preview { grid-column: 2; }
+
+  /* Grade do jogo: limita largura para não ficar absurda em ultrawide */
+  .grade {
+    max-width: min(70vh, 700px);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Tela final: mais espaçada */
+  .fim-wrapper {
+    max-width: 520px;
+  }
+}
+
+/* ---------- MOBILE PEQUENO ---------- */
 @media (max-width: 400px) {
   .grade {
     gap: 4px;
-    padding: 0.6rem;
+    padding: 0.5rem;
   }
 
   .hud {
     padding: 0.6rem 0.8rem;
   }
 
-  .titulo-jogo {
-    font-size: 4rem;
+  .fim-pontos {
+    font-size: 2.5rem;
   }
 }
 
+/* ---------- TELAS MUITO BAIXAS (landscape mobile) ---------- */
+@media (max-height: 500px) {
+  .titulo-jogo {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitulo {
+    display: none; /* sacrifica o subtítulo para dar espaço */
+  }
+
+  .intro-wrapper {
+    padding: 1rem;
+  }
+
+  .hud {
+    padding: 0.4rem 1rem;
+  }
+
+  .feedback-msg {
+    height: 1.2rem;
+    line-height: 1.2rem;
+    font-size: 0.65rem;
+  }
+}
+
+/* ---------- ACESSIBILIDADE ---------- */
 @media (prefers-reduced-motion: reduce) {
   .celula, .tela, #barra-tempo {
     transition: none;
