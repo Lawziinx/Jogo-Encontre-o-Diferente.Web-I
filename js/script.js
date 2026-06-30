@@ -214,15 +214,34 @@ function calcularTamanhoGrade() {
 function gerarGrade(colunas, linhas) {
   gradeEl.innerHTML = '';
 
-  const larguraGrade = {
-    3: 420,
-    4: 500,
-    5: 580,
-    6: 660
-  };
+// Calcula automaticamente o melhor tamanho das células
+const larguraDisponivel = window.innerWidth * 0.70;
+const alturaDisponivel =
+    window.innerHeight -
+    document.querySelector('.hud').offsetHeight -
+    80;
 
-  gradeEl.style.width = `${larguraGrade[colunas]}px`;
-  gradeEl.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
+const gap = 8;
+
+const tamanhoPorLargura =
+    (larguraDisponivel - (colunas - 1) * gap) / colunas;
+
+const tamanhoPorAltura =
+    (alturaDisponivel - (linhas - 1) * gap) / linhas;
+
+const tamanhoCelula = Math.max(
+    55,
+    Math.min(
+        tamanhoPorLargura,
+        tamanhoPorAltura,
+        110
+    )
+);
+
+gradeEl.style.gridTemplateColumns =
+    `repeat(${colunas}, ${tamanhoCelula}px)`;
+
+gradeEl.style.gap = `${gap}px`;
 
   estado.emojisAtual.forEach((emoji, index) => {
     const celula = document.createElement('div');
