@@ -249,21 +249,19 @@ html, body {
 
 /* ── GRADE ────────────────────────────────────────── */
 .grade {
-  display: grid;
-  gap: 8px;
-  padding: .8rem;
+    display: grid;
+    gap: 8px;
+    padding: .8rem;
 
-  flex: 1;
-  min-height: 0;
+    flex: 1;
+    min-height: 0;
 
-  justify-content: center;
-  align-content: center;
+    justify-content: center;
+    align-content: center;
 
-  width: fit-content;
-  max-width: 100%;
-  margin: 0 auto;
+    margin: 0 auto;
 
-  overflow: hidden;
+    overflow: hidden;
 }
 
 /* Em desktop a grade não precisa ocupar a tela toda */
@@ -273,22 +271,22 @@ html, body {
   }
 }
 
-..celula{
-    width:70px;
-    height:70px;
+.celula {
+    width: 100%;
+    aspect-ratio: 1;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    font-size:2rem;
+    font-size: clamp(1.4rem, 2vw, 2.2rem);
 
-    cursor:pointer;
-    user-select:none;
+    cursor: pointer;
+    user-select: none;
 
-    border:2px solid transparent;
+    border: 2px solid transparent;
 
     transition:
         transform .12s ease,
@@ -296,10 +294,11 @@ html, body {
         background-color .12s ease;
 }
 
-.celula:hover{
-    transform:scale(1.03);
-    border-color:rgba(232,255,0,.45);
-    z-index:2;
+.celula:hover {
+    transform: scale(1.02);
+    border-color: rgba(232,255,0,.45);
+    z-index: 2;
+}
 }
 .celula:active { transform: scale(0.94); }
 
