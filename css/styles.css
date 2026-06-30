@@ -250,8 +250,6 @@ html, body {
 /* ── GRADE ────────────────────────────────────────── */
 .grade {
     display: grid;
-    gap: 8px;
-    padding: .8rem;
 
     flex: 1;
     min-height: 0;
@@ -259,9 +257,11 @@ html, body {
     justify-content: center;
     align-content: center;
 
-    margin: 0 auto;
+    margin: auto;
 
     overflow: hidden;
+
+    padding: .8rem;
 }
 
 /* Em desktop a grade não precisa ocupar a tela toda */
@@ -295,7 +295,7 @@ html, body {
 }
 
 .celula:hover {
-    transform: scale(1.02);
+    transform: scale(1.03);
     border-color: rgba(232,255,0,.45);
     z-index: 2;
 }
