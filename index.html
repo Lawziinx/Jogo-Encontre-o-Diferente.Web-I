@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ODD ONE OUT — Encontre o Diferente</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- TELA INICIAL -->
+  <div id="tela-inicio" class="tela ativa">
+    <div class="intro-wrapper">
+      <p class="eyebrow">MODO HARDCORE</p>
+      <h1 class="titulo-jogo">ODD<br>ONE<br>OUT</h1>
+      <p class="subtitulo">Um está errado. Você tem segundos para achá-lo.<br>A grade não vai ficar parada esperando.</p>
+
+      <div class="campo-nome">
+        <input type="text" id="input-nome" placeholder="Seu nome, jogador" maxlength="20" />
+      </div>
+
+      <button id="btn-jogar" class="btn-principal">JOGAR</button>
+
+      <div id="ranking-preview" class="ranking-preview">
+        <p class="ranking-titulo">— MELHORES —</p>
+        <ol id="lista-ranking"></ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA DO JOGO -->
+  <div id="tela-jogo" class="tela">
+    <header class="hud">
+      <div class="hud-bloco">
+        <span class="hud-label">RODADA</span>
+        <span id="hud-rodada" class="hud-valor">1</span>
+      </div>
+      <div class="hud-bloco hud-tempo">
+        <span class="hud-label">TEMPO</span>
+        <div id="barra-tempo-wrapper">
+          <div id="barra-tempo"></div>
+        </div>
+      </div>
+      <div class="hud-bloco">
+        <span class="hud-label">PONTOS</span>
+        <span id="hud-pontos" class="hud-valor">0</span>
+      </div>
+    </header>
+
+    <div id="feedback-msg" class="feedback-msg"></div>
+    <div id="grade" class="grade"></div>
+  </div>
+
+  <!-- TELA FINAL -->
+  <div id="tela-fim" class="tela">
+    <div class="fim-wrapper">
+      <p class="eyebrow" id="fim-eyebrow">FIM DE JOGO</p>
+      <h2 class="fim-titulo" id="fim-titulo">VOCÊ SOBREVIVEU</h2>
+      <p class="fim-nome" id="fim-nome"></p>
+      <div class="fim-pontos-wrapper">
+        <span class="fim-pontos-label">PONTUAÇÃO FINAL</span>
+        <span class="fim-pontos" id="fim-pontos">0</span>
+      </div>
+      <div class="fim-stats" id="fim-stats"></div>
+      <div class="fim-botoes">
+        <button id="btn-novo-jogo" class="btn-principal">JOGAR NOVAMENTE</button>
+        <button id="btn-voltar-inicio" class="btn-secundario">INÍCIO</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

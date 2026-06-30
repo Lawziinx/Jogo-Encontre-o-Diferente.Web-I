@@ -1,0 +1,412 @@
+/* ===================================================
+   ODD ONE OUT — styles.css
+   Paleta: fundo #0d0d0d, grade #161616, acento #e8ff00
+   (amarelo ácido que dói nos olhos de propósito —
+   hardcore pede estética agressiva)
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* ---------- RESET & BASE ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:        #0d0d0d;
+  --surface:   #161616;
+  --border:    #2a2a2a;
+  --acento:    #e8ff00;
+  --acento2:   #ff3c3c;
+  --texto:     #f0f0f0;
+  --muted:     #666;
+  --fonte-disp: 'Space Mono', monospace;
+  --fonte-corpo: 'Space Grotesk', sans-serif;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--texto);
+  font-family: var(--fonte-corpo);
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---------- SISTEMA DE TELAS ---------- */
+.tela {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.tela.ativa {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ---------- TELA INÍCIO ---------- */
+.intro-wrapper {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  max-width: 440px;
+  width: 100%;
+}
+
+.eyebrow {
+  font-family: var(--fonte-disp);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--acento);
+  margin-bottom: 1.2rem;
+}
+
+.titulo-jogo {
+  font-family: var(--fonte-disp);
+  font-size: clamp(4rem, 18vw, 7rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--texto);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  /* assinatura: cada letra tem sombra colorida deslocada */
+  text-shadow: 4px 4px 0px var(--acento), 8px 8px 0px rgba(232,255,0,0.15);
+}
+
+.subtitulo {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.campo-nome {
+  margin-bottom: 1.2rem;
+}
+
+.campo-nome input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--acento);
+  color: var(--texto);
+  font-family: var(--fonte-disp);
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  outline: none;
+  text-align: center;
+  letter-spacing: 0.05em;
+  transition: border-color 0.2s;
+}
+
+.campo-nome input:focus {
+  border-color: var(--acento);
+  border-bottom-width: 2px;
+}
+
+.campo-nome input::placeholder {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- BOTÕES ---------- */
+.btn-principal {
+  background: var(--acento);
+  color: #0d0d0d;
+  border: none;
+  font-family: var(--fonte-disp);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-principal:hover {
+  background: #f5ff4d;
+}
+
+.btn-principal:active {
+  transform: scale(0.98);
+}
+
+.btn-secundario {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  font-family: var(--fonte-disp);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.8rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-secundario:hover {
+  color: var(--texto);
+  border-color: var(--texto);
+}
+
+/* ---------- RANKING PREVIEW ---------- */
+.ranking-preview {
+  margin-top: 2rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.2rem;
+}
+
+.ranking-titulo {
+  font-family: var(--fonte-disp);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+#lista-ranking {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#lista-ranking li {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--fonte-disp);
+  font-size: 0.8rem;
+  color: var(--texto);
+}
+
+#lista-ranking li:first-child {
+  color: var(--acento);
+}
+
+#lista-ranking .rank-pts {
+  color: var(--muted);
+}
+
+/* ---------- HUD (cabeçalho do jogo) ---------- */
+#tela-jogo {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.2rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+
+.hud-bloco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.hud-tempo {
+  flex: 1;
+}
+
+.hud-label {
+  font-family: var(--fonte-disp);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.hud-valor {
+  font-family: var(--fonte-disp);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+#barra-tempo-wrapper {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#barra-tempo {
+  height: 100%;
+  width: 100%;
+  background: var(--acento);
+  border-radius: 3px;
+  transition: width 0.1s linear, background 0.3s;
+}
+
+#barra-tempo.urgente {
+  background: var(--acento2);
+}
+
+/* ---------- FEEDBACK ---------- */
+.feedback-msg {
+  text-align: center;
+  font-family: var(--fonte-disp);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  color: transparent;
+  transition: color 0.2s;
+}
+
+.feedback-msg.acerto {
+  color: var(--acento);
+}
+
+.feedback-msg.erro {
+  color: var(--acento2);
+}
+
+/* ---------- GRADE ---------- */
+.grade {
+  display: grid;
+  gap: 6px;
+  padding: 1rem;
+  flex: 1;
+  align-content: center;
+  /* colunas definidas via JS */
+}
+
+/* Célula base */
+.celula {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.12s, border-color 0.12s, opacity 0.2s;
+  user-select: none;
+  /* animação de embaralhamento */
+}
+
+.celula:hover {
+  transform: scale(1.08);
+  border-color: rgba(232,255,0,0.4);
+}
+
+.celula:active {
+  transform: scale(0.94);
+}
+
+.celula.acerto-anim {
+  border-color: var(--acento) !important;
+  background: rgba(232,255,0,0.15) !important;
+}
+
+.celula.erro-anim {
+  border-color: var(--acento2) !important;
+  background: rgba(255,60,60,0.15) !important;
+}
+
+/* ---------- TELA FIM ---------- */
+.fim-wrapper {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  max-width: 440px;
+  width: 100%;
+}
+
+.fim-titulo {
+  font-family: var(--fonte-disp);
+  font-size: clamp(2rem, 10vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  text-shadow: 3px 3px 0 var(--acento);
+}
+
+.fim-nome {
+  font-family: var(--fonte-disp);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--acento);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.fim-pontos-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--acento);
+}
+
+.fim-pontos-label {
+  font-family: var(--fonte-disp);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.fim-pontos {
+  font-family: var(--fonte-disp);
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--acento);
+}
+
+.fim-stats {
+  font-family: var(--fonte-corpo);
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.fim-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width: 400px) {
+  .grade {
+    gap: 4px;
+    padding: 0.6rem;
+  }
+
+  .hud {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .titulo-jogo {
+    font-size: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celula, .tela, #barra-tempo {
+    transition: none;
+  }
+}
