@@ -213,7 +213,7 @@ function calcularTamanhoGrade() {
 
 function gerarGrade(colunas, linhas) {
   gradeEl.innerHTML = '';
-  gradeEl.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
+  gradeEl.style.gridTemplateColumns = `repeat(${colunas}, 70px)`;
 
   estado.emojisAtual.forEach((emoji, index) => {
     const celula = document.createElement('div');
